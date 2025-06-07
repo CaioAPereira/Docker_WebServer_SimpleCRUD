@@ -1,0 +1,20 @@
+Erros encontrados:
+
+1. Linha 25, destino-contato.php, Esta apenas com dois argumentos, enviando 3º.
+2. Linha 29, destino-contato.php, Senha não existe, inserido $msg.
+3. Linha 14, destino-contato.php, estava como GET, colocado POST.
+4. Linha 15, destino-contato.php, estava como GET, colocado POST.
+5. Linha 16, destino-contato.php, estava como GET, colocado POST.
+6. Linha 35, destino-contato.php, estava como !==, é ==.
+6. Linha 16, listagem.php, faltava ponto e vírgula.
+x. Linha 45, listagem.php, espaço incorreto.
+x. Linha 46, listagem.php, espaço incorreto.
+x. Linha 58, listagem.php, retirado php e colocado =, faltava echo.
+7. Linha 33, contato.php, button type button, alterado para submit.
+8. Linha 22, contato.php, faltava o atributo "name='email'"
+X. Linha 18, contato-alterar.php, faltavam argumentos email e mensagem na consulta.
+X. Linha 34, contato-alterar.php, mandando para pagina errada.
+X. Linha 17, destino-contato-alterar.php, estava como sanitize int, passado para character.
+X. Linha 2, excluir-contato.php, estava como 'eader.php', colocado 'header.php'.
+X. Linha 14, excluir-contato.php, estava como '1D'.
+X. Linha 40, excluir-contato.php, estava como 'listage.php', colocado 'listagem.php'.

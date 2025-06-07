@@ -1,0 +1,65 @@
+services:
+  # Criando, por meio do Dockerfile, o Apache + PHP, em build está o caminho relativo do arquivo
+  serverweb:
+    build: ./serverWeb/
+    container_name: crud_serverweb
+    ports:
+      # Direciona a porta 80 do container para a 80 da máquina local
+      - "80:80"
+    volumes:
+      - ./crud-app:/var/www/html/
+    depends_on:
+      # Gera depêndencia funcional do BD MySQL
+      - mysql
+    networks:
+      - crud_network
+    restart: unless-stopped
+
+  # Criando o Banco MySQL
+  mysql:
+    # Como não é através de Dockerfile, usei uma imagem pronta do DockerHub
+    image: mysql:8.0
+    container_name: crud_mysql
+    # Definindo variáveis de ambiente
+    environment:
+      MYSQL_ROOT_PASSWORD: root_admin
+      MYSQL_DATABASE: crudDB
+      MYSQL_USER: db_user
+      MYSQL_PASSWORD: admin
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      # Definindo que na criação, a tabela deve ser criada através do arquivo config.sql
+      - ./crud-app/tabelas.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - crud_network
+    restart: unless-stopped
+
+# Baixando imagem do DockerHub do phpMyAdmin para gerenciamento do banco MySQL
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: crud_phpmyadmin
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+      PMA_USER: root
+      PMA_PASSWORD: root_admin
+      MYSQL_ROOT_PASSWORD: root_admin
+    ports:
+    # Porta 8080 da máquina física para 80 do container, onde comunicará com phpmyadmin
+      - "8080:80"
+    depends_on:
+      - mysql
+    networks:
+      - crud_network
+    restart: unless-stopped
+  
+# Volumes para persistência de dados
+volumes:
+  mysql_data:
+
+# Rede interna para comunicação entre containers
+networks:
+  crud_network:
+    driver: bridge
